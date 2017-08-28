@@ -1,0 +1,16 @@
+{% extends 'myweb/base.html' %}
+
+{% block content %}
+<p> 主题 </p>
+
+<ul>
+	{% for topic in topics %}
+		<li>
+		<a href="{% url 'myweb:topic' topic.id %}">{{topic}}</a>
+		</li>
+	{% empty %}
+		<li>没有内容</li>
+	{% endfor %}
+</ul>
+
+{% endblock content %}

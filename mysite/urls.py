@@ -14,14 +14,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
+from django.conf.urls import include
 from django.contrib import admin
 from myweb import views as myweb_viwes
 
 
 urlpatterns = (
-    #url(r'^admin/', admin.site.urls),
+    url(r'^admin/', admin.site.urls),
     url(r'^plan/', myweb_viwes.plan,name = 'plan'),
-    url(r'^hello/*', myweb_viwes.receive_data),
-
-
-)
+    url(r'^hello/', myweb_viwes.receive_data),
+    url(r'^users/', include('users.urls',namespace = 'users')),
+    url(r'', include('myweb.urls',namespace = 'myweb')),
+    
+    )

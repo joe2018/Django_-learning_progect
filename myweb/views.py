@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.db import connection
 import time
 from django.http import HttpResponseRedirect
+from .models import Topic
 
 
 
@@ -32,7 +33,9 @@ from django.http import HttpResponseRedirect
 #     except:
 #         context['hello'] = '空'
 #     return render(request, 'hello.html', context)
-
+def index(request):
+    #blog
+    return render(request,'myweb/index.html')
 
 def plan(request):
     context = {}
@@ -78,5 +81,22 @@ def receive_data(request):
         print(text)
         print(locals())
     return render(request, 'hello.html', locals())
+
+def topics(request):
+    '''显示所有主题'''
+    topics = Topic.objects.order_by('date_added')
+    context = {'topics':topics}
+    return render(request,'myweb/topics.html',context)
+
+def topic(request,topic_id):
+    topic = Topic.objects.get(id=topic_id)
+    entries = topic.entry_set.order_by('-date_added')
+    context = {'topic':topic,'entries':entries}
+    return render(request,'myweb/topic.html',context)
+
+
+
+
+
 
 
